@@ -1,6 +1,6 @@
 package two;
 
-import com.sun.org.apache.bcel.internal.generic.CASTORE;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import one.CheckBoxPanel;
 
 public class RadionButtonDemo extends JPanel implements ActionListener {
 
@@ -74,7 +73,7 @@ public class RadionButtonDemo extends JPanel implements ActionListener {
         Dimension dimension = new Dimension(185, 125);
         pictureJLabel.setPreferredSize(dimension);
 
-        JPanel radioButtonPanel = new JPanel(new GridLayout(5, 5));
+        JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
         radioButtonPanel.add(birdButton);
         radioButtonPanel.add(catButton);
         radioButtonPanel.add(dogButton);
@@ -89,12 +88,12 @@ public class RadionButtonDemo extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         //TODO
-        String pictureName;
-        ImageIcon imageIcon = createImageIcon(CAT_NAME);
+        String pictureName = e.getActionCommand();
+        ImageIcon imageIcon = createImageIcon(pictureName);
         pictureJLabel.setIcon(imageIcon);
     }
 
-    private ImageIcon createImageIcon(String pictureName) {
+     private ImageIcon createImageIcon(String pictureName) {
         String fileName = pictureName + ".gif";
         URL imageURL = RadionButtonDemo.class.getResource(fileName);
         if (imageURL != null) {
