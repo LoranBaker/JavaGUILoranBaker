@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class SuperMarioExectuor {
     public static void main(String[] args) {
         
-        SuperMarioImplementation smi = new SuperMarioImplementation(0, State.SMALL_MARIO);
+        SuperMarioImplementation smi = new SuperMarioImplementation(0,State.SMALL_MARIO);
         Scanner sc = new Scanner(System.in);
         String line = "";
         System.out.println("Super mario");
