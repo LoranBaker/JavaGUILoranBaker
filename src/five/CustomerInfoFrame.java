@@ -5,8 +5,7 @@
  */
 package five;
 
-import java.util.List;
-import java.util.Vector;
+import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -29,11 +28,15 @@ public class CustomerInfoFrame extends JFrame {
         pack();
         setVisible(true);
     }
-    /*
-    public static void main(String[] args) {
-     /*
-        JComponent component1= new CustomerInfoPanel(CustomerInfoDao);
-        CustomerInfoFrame customerInfo = new CustomerInfoFrame("Customer Info", component);
-        SwingUtilities.invokeLater(customerInfo::showFrame);
-    }*/
+    
+    public static void main(String[] args) throws SQLException {
+        String URL = "jdbc:derby://localhost:1527/sample";
+        DerbyConnectionPool connectionPool = new DerbyConnectionPool(URL);
+        //CRUD-statements na SQL bazu
+        CustomerInfoDao customerInfoDao = new CustomerInfoDao(connectionPool);
+        //VIEW
+        JComponent component = new CustomerInfoPanel(customerInfoDao);
+        CustomerInfoFrame customerInfoFrame = new CustomerInfoFrame("Customer info", component);
+        SwingUtilities.invokeLater(customerInfoFrame::showFrame);
+    }
 }

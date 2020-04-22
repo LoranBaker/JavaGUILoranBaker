@@ -11,15 +11,12 @@ public class DerbyConnectionPool {
     private final int MAX_CONNECTION = 10;
 
     private final String URL;
-    private final String username;
-    private final String password;
+
     private final List<Connection> usedConnection;
     private final List<Connection> availableConnection;
 
-    public DerbyConnectionPool(String URL, String username, String password) {
+    public DerbyConnectionPool(String URL) throws SQLException{
         this.URL = URL;
-        this.username = username;
-        this.password = password;
         this.usedConnection = new ArrayList<>();
         this.availableConnection = new ArrayList<>();
         for (int i = 0; i < MAX_CONNECTION; i++) {
@@ -27,12 +24,12 @@ public class DerbyConnectionPool {
         }
     }
 
-    private Connection createConnection() {
-        try (Connection connection = DriverManager.getConnection(this.URL, this.username, this.password)) {
+
+    private Connection createConnection() throws SQLException {
+        Connection connection = DriverManager.getConnection(this.URL);
+        System.out.println("objekat se kreirao");
             return connection;
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex.getMessage());
-        }
+            
     }
 
     public Connection getConnection() {
