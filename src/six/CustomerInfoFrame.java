@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package five;
+package six;
 
+import five.CustomerInfoDao;
+import five.DerbyConnectionPool;
 import java.sql.SQLException;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -33,7 +35,9 @@ public class CustomerInfoFrame extends JFrame {
       
        
        DerbyConnectionPool connectionPool = new DerbyConnectionPool();
+       
        CustomerInfoDao customerInfoDao = new CustomerInfoDao(connectionPool);
+       
        JComponent jComponent = new CustomerInfoPanel(customerInfoDao);
        CustomerInfoFrame customerInfoFrame = new CustomerInfoFrame("Customer info", jComponent);
        SwingUtilities.invokeLater(customerInfoFrame::showFrame);

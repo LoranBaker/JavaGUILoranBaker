@@ -15,23 +15,19 @@ public class CustomerInfo {
     private final Integer ZIP;
     private final String NAME;
     private final String ADDRESSLINE1;
-    private final String ADDRESSLINE2;
     private final String CITY;
     private final String STATE;
-    private final Integer FAX;
     private final String EMAIL;
     private final Integer CREDIT_LIMIT;
 
-    public CustomerInfo(Integer CUSTOMER_ID, String DISCOUNT_CODE, Integer ZIP, String NAME, String ADDRESSLINE1, String ADDRESSLINE2, String CITY, String STATE, Integer FAX, String EMAIL, Integer CREDIT_LIMIT) {
+    public CustomerInfo(Integer CUSTOMER_ID, String DISCOUNT_CODE, Integer ZIP, String NAME, String ADDRESSLINE1, String CITY, String STATE, String EMAIL, Integer CREDIT_LIMIT) {
         this.CUSTOMER_ID = CUSTOMER_ID;
         this.DISCOUNT_CODE = DISCOUNT_CODE;
         this.ZIP = ZIP;
         this.NAME = NAME;
         this.ADDRESSLINE1 = ADDRESSLINE1;
-        this.ADDRESSLINE2 = ADDRESSLINE2;
         this.CITY = CITY;
         this.STATE = STATE;
-        this.FAX = FAX;
         this.EMAIL = EMAIL;
         this.CREDIT_LIMIT = CREDIT_LIMIT;
     }
@@ -56,20 +52,12 @@ public class CustomerInfo {
         return ADDRESSLINE1;
     }
 
-    public String getADDRESSLINE2() {
-        return ADDRESSLINE2;
-    }
-
     public String getCITY() {
         return CITY;
     }
 
     public String getSTATE() {
         return STATE;
-    }
-
-    public Integer getFAX() {
-        return FAX;
     }
 
     public String getEMAIL() {

@@ -26,7 +26,7 @@ public class CustomerInfoDao implements Dao<CustomerInfo> {
     }
     
     public Vector getColumnNames() {
-        String sqlQuery = "SELECT * from CUSTOMER";
+        String sqlQuery = "SELECT * from CUSTOMERS";
         try (PreparedStatement ps = connectionPool.getConnection().prepareStatement(sqlQuery);
                 ResultSet rs = ps.executeQuery();) {
             ResultSetMetaData resultSetMetaData = rs.getMetaData();
@@ -43,23 +43,22 @@ public class CustomerInfoDao implements Dao<CustomerInfo> {
 
     @Override
     public List<CustomerInfo> getAll() throws SQLException {
-        String sqlQuery = "SELECT*FROM customerInfo";
+        String sqlQuery = "SELECT*FROM ROOT.CUSTOMERS FETCH FIRST 100 ROWS ONLY";
         List<CustomerInfo> listOfCustomer = new ArrayList<>();
 
         try (PreparedStatement ps = connectionPool.getConnection().prepareStatement(sqlQuery)) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                CustomerInfo ci = new CustomerInfo(rs.getInt("CUSTOMER_ID"),
-                        rs.getString("DISCOUNT_CODE"),
-                        rs.getInt("ZIP"),
-                        rs.getString("NAME"),
-                        rs.getString("ADDRESSLINE1"),
-                        rs.getString("ADDRESSLINE2"),
-                        rs.getString("CITY"),
-                        rs.getString("STATE"),
-                        rs.getInt("FAX"),
-                        rs.getString("EMAIL"),
-                        rs.getInt("CREDIT_LIMIT"));
+                CustomerInfo ci = new CustomerInfo(rs.getInt(1),
+                rs.getString(2),
+                rs.getInt(3),
+                rs.getString(4),
+                rs.getString(5),
+                rs.getString(6),
+                rs.getString(7),
+                rs.getString(8),
+                rs.getInt(9)
+                );
                 listOfCustomer.add(ci);
             }
             return listOfCustomer;
@@ -87,7 +86,7 @@ public class CustomerInfoDao implements Dao<CustomerInfo> {
     @Override
     public void update(CustomerInfo entity) throws SQLException {
         System.out.println(entity);
-        String sql = "UPDATE PLAYERINFO SET SPORT=? WHERE id=?";
+        String sql = "UPDATE CUSTOMERS SET ADDRESSLINE1=? WHERE CUSTOMER_ID=?";
         try(PreparedStatement ps = connectionPool.getConnection().prepareStatement(sql)){
             ps.setString(1, entity.getADDRESSLINE1());
             ps.setInt(2, entity.getCUSTOMER_ID());

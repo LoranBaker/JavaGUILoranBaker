@@ -1,6 +1,7 @@
 
-package five;
+package six;
 
+import five.*;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -13,13 +14,14 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 
-public class CustomerInfoPanel extends JPanel{
+public class CustomerInfoPanel extends JPanel implements TableModelListener{
     
     private CustomerInfoDao customerDao;
-    private final Vector<Vector<Object>> data;
-    private final Vector<String> columnNames;
     private JCheckBox rowCheckBox;
     private JCheckBox columnCheckBox;
     private ButtonGroup buttonGroup;
@@ -29,14 +31,12 @@ public class CustomerInfoPanel extends JPanel{
     public CustomerInfoPanel(CustomerInfoDao cid) throws SQLException{
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.customerDao = cid;
-        this.columnNames = customerDao.getColumnNames();
-        this.data = getAll();
         //tabela sa scroll pane
-        JTable table = new JTable(this.data, this.columnNames);
-        OurTableModel tableModel = new OurTableModel();
-        table.setModel(tableModel);
+        OurTableModel tableModel = new OurTableModel(cid.getColumnNames(), getAll());
+        JTable table = new JTable(tableModel);
         table.setPreferredScrollableViewportSize(new Dimension(500, 70));
         table.setFillsViewportHeight(true);
+        table.getModel().addTableModelListener(this);
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane);
         
@@ -55,27 +55,47 @@ public class CustomerInfoPanel extends JPanel{
         add(multipleRadioButton);
         outputTextArea = new JTextArea(5, 40);
         add(new JScrollPane(outputTextArea));
+    
     }
     
     private Vector<Vector<Object>> getAll() throws SQLException {
         Vector<Vector<Object>> data = new Vector<>();
         for (CustomerInfo customerInfo : customerDao.getAll()) {
             Vector<Object> vectorRow = new Vector<>();
-            vectorRow.addElement(customerInfo.getDISCOUNT_CODE());
-            vectorRow.addElement(customerInfo.getZIP());
+            vectorRow.addElement(customerInfo.getCUSTOMER_ID());
             vectorRow.addElement(customerInfo.getNAME());
             vectorRow.addElement(customerInfo.getADDRESSLINE1());
             vectorRow.addElement(customerInfo.getCITY());
             vectorRow.addElement(customerInfo.getSTATE());
-            vectorRow.addElement(customerInfo.getEMAIL());
+            vectorRow.addElement(customerInfo.getZIP());
             vectorRow.addElement(customerInfo.getCREDIT_LIMIT());
             data.addElement(vectorRow);
         }
         return data;
     }
     
+     @Override
+    public void tableChanged(TableModelEvent e) {
+        int row = e.getFirstRow();
+        int column = e.getColumn();
+        TableModel tableModel = (TableModel) e.getSource();
+        String columnName = tableModel.getColumnName(column);
+        Object data = tableModel.getValueAt(row, column);
+        System.out.println("Ime kolone: " + columnName);
+        System.out.println(data + " <- podatak koji se promijenio");
+    }
+    
     private class OurTableModel extends AbstractTableModel {
+        
+        private final Vector<String> columnNames;
+        private final Vector<Vector<Object>> data;
 
+        public OurTableModel(Vector<String> columnNames, Vector<Vector<Object>> data) {
+            this.columnNames = columnNames;
+            this.data = data;
+        }
+        
+       
         @Override
         public int getRowCount() {
             return data.size();
@@ -103,6 +123,13 @@ public class CustomerInfoPanel extends JPanel{
             Class<?> clazz = getValueAt(0, columnIndex).getClass();
             System.out.println(clazz.getName());
             return getValueAt(0, columnIndex).getClass(); //To change body of generated methods, choose Tools | Templates.
+            }
+        
+         @Override
+        public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+            Vector<Object> rowVector = data.get(rowIndex);
+            rowVector.remove(columnIndex);
+            rowVector.add(columnIndex, aValue);
         }
 
     }
