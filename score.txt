@@ -1,0 +1,21 @@
+AWAYOld score = 0New score = 10
+HOMEOld score = 0New score = -10
+AWAYOld score = 10New score = 20
+HOMEOld score = -10New score = -20
+HOMEOld score = -20New score = -10
+AWAYOld score = 20New score = 10
+HOMEOld score = -10New score = 0
+AWAYOld score = 10New score = 0
+HOMEOld score = 0New score = 10
+AWAYOld score = 0New score = -10
+AWAYOld score = -10New score = 0
+HOMEOld score = 10New score = 0
+AWAYOld score = 0New score = 10
+HOMEOld score = 0New score = -10
+HOMEOld score = -10New score = 0
+AWAYOld score = 10New score = 0
+AWAYOld score = 0New score = 10
+HOMEOld score = 0New score = -10
+AWAYOld score = 10New score = 20
+HOMEOld score = -10New score = -20
+
