@@ -1,7 +1,9 @@
 
 package six;
 
-import five.*;
+
+import five.CustomerInfo;
+import five.CustomerInfoDao;
 import java.awt.Dimension;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -34,7 +36,7 @@ public class CustomerInfoPanel extends JPanel implements TableModelListener{
         //tabela sa scroll pane
         OurTableModel tableModel = new OurTableModel(cid.getColumnNames(), getAll());
         JTable table = new JTable(tableModel);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+        table.setPreferredScrollableViewportSize(new Dimension(1000, 100));
         table.setFillsViewportHeight(true);
         table.getModel().addTableModelListener(this);
         JScrollPane scrollPane = new JScrollPane(table);
@@ -63,11 +65,13 @@ public class CustomerInfoPanel extends JPanel implements TableModelListener{
         for (CustomerInfo customerInfo : customerDao.getAll()) {
             Vector<Object> vectorRow = new Vector<>();
             vectorRow.addElement(customerInfo.getCUSTOMER_ID());
+            vectorRow.addElement(customerInfo.getDISCOUNT_CODE());
+            vectorRow.addElement(customerInfo.getZIP());
             vectorRow.addElement(customerInfo.getNAME());
             vectorRow.addElement(customerInfo.getADDRESSLINE1());
             vectorRow.addElement(customerInfo.getCITY());
             vectorRow.addElement(customerInfo.getSTATE());
-            vectorRow.addElement(customerInfo.getZIP());
+            vectorRow.addElement(customerInfo.getEMAIL());
             vectorRow.addElement(customerInfo.getCREDIT_LIMIT());
             data.addElement(vectorRow);
         }
@@ -94,6 +98,10 @@ public class CustomerInfoPanel extends JPanel implements TableModelListener{
             this.columnNames = columnNames;
             this.data = data;
         }
+        @Override
+        public String getColumnName(int column) {
+            return columnNames.get(column);
+        }
         
        
         @Override
@@ -119,7 +127,7 @@ public class CustomerInfoPanel extends JPanel implements TableModelListener{
         }
 
         @Override
-        public Class<?> getColumnClass(int columnIndex) {
+        public Class<? extends Object> getColumnClass(int columnIndex) {
             Class<?> clazz = getValueAt(0, columnIndex).getClass();
             System.out.println(clazz.getName());
             return getValueAt(0, columnIndex).getClass(); //To change body of generated methods, choose Tools | Templates.

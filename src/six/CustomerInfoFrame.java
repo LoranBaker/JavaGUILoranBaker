@@ -31,7 +31,7 @@ public class CustomerInfoFrame extends JFrame {
         setVisible(true);
     }
     
-    public static void main(String[] args) throws SQLException, SQLException{
+    public static void main(String[] args) throws SQLException{
       
        
        DerbyConnectionPool connectionPool = new DerbyConnectionPool();

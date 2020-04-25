@@ -61,6 +61,7 @@ public class CustomerInfoPanel extends JPanel{
         Vector<Vector<Object>> data = new Vector<>();
         for (CustomerInfo customerInfo : customerDao.getAll()) {
             Vector<Object> vectorRow = new Vector<>();
+            vectorRow.addElement(customerInfo.getCUSTOMER_ID());
             vectorRow.addElement(customerInfo.getDISCOUNT_CODE());
             vectorRow.addElement(customerInfo.getZIP());
             vectorRow.addElement(customerInfo.getNAME());

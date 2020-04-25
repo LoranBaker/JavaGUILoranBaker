@@ -30,8 +30,7 @@ public class CustomerInfoFrame extends JFrame {
     }
     
     public static void main(String[] args) throws SQLException, SQLException{
-      
-       
+
        DerbyConnectionPool connectionPool = new DerbyConnectionPool();
        CustomerInfoDao customerInfoDao = new CustomerInfoDao(connectionPool);
        JComponent jComponent = new CustomerInfoPanel(customerInfoDao);
