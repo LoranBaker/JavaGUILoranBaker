@@ -6,8 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.stream.Stream;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -18,71 +18,30 @@ import javax.swing.JRadioButton;
 
 public class RadionButtonDemo extends JPanel implements ActionListener {
 
-    static final String BIRD_NAME = "Bird";
-    static final String CAT_NAME = "Cat";
-    static final String DOG_NAME = "Dog";
-    static final String PIG_NAME = "Pig";
-    static final String RABBIT_NAME = "Rabbit";
-
     private JLabel pictureJLabel;
+    private final ButtonGroup buttonGroup;
+    private final JPanel buttonPanel;
 
     public RadionButtonDemo() {
         super(new BorderLayout());
-        JRadioButton birdButton = new JRadioButton(BIRD_NAME);
-        birdButton.setMnemonic(KeyEvent.VK_B);
-        birdButton.setActionCommand(BIRD_NAME);
-        birdButton.setSelected(true);
-
-        JRadioButton catButton = new JRadioButton(CAT_NAME);
-        catButton.setMnemonic(KeyEvent.VK_C);
-        catButton.setActionCommand(CAT_NAME);
-        catButton.setSelected(true);
-
-        JRadioButton dogButton = new JRadioButton(DOG_NAME);
-        dogButton.setMnemonic(KeyEvent.VK_D);
-        dogButton.setActionCommand(DOG_NAME);
-        dogButton.setSelected(true);
-
-        JRadioButton pigButton = new JRadioButton(PIG_NAME);
-        pigButton.setMnemonic(KeyEvent.VK_P);
-        pigButton.setActionCommand(PIG_NAME);
-        pigButton.setSelected(true);
-
-        JRadioButton rabbitButton = new JRadioButton(RABBIT_NAME);
-        rabbitButton.setMnemonic(KeyEvent.VK_R);
-        rabbitButton.setActionCommand(RABBIT_NAME);
-        rabbitButton.setSelected(true);
-
-        //RADIOBUTTON GROUP
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(birdButton);
-        buttonGroup.add(catButton);
-        buttonGroup.add(dogButton);
-        buttonGroup.add(pigButton);
-        buttonGroup.add(rabbitButton);
-
-        //ACTION LISTENERS
-        birdButton.addActionListener(this);
-        catButton.addActionListener(this);
-        dogButton.addActionListener(this);
-        pigButton.addActionListener(this);
-        rabbitButton.addActionListener(this);
-
-        //PICTURE LABEL
-        pictureJLabel = new JLabel(createImageIcon(BIRD_NAME));
-        Dimension dimension = new Dimension(185, 125);
-        pictureJLabel.setPreferredSize(dimension);
-
-        JPanel radioButtonPanel = new JPanel(new GridLayout(0, 1));
-        radioButtonPanel.add(birdButton);
-        radioButtonPanel.add(catButton);
-        radioButtonPanel.add(dogButton);
-        radioButtonPanel.add(pigButton);
-        radioButtonPanel.add(rabbitButton);
-
-        add(radioButtonPanel, BorderLayout.LINE_START);
+        buttonGroup = new ButtonGroup();
+        buttonPanel = new JPanel(new GridLayout(0, 1));
+        Stream.of(AnimalButtonEnum.values()).forEach(this::createRadioButton);
+        pictureJLabel = new JLabel(createImageIcon(AnimalButtonEnum.BIRD.getName()));
+        pictureJLabel.setPreferredSize(new Dimension(187, 122));
+        add(buttonPanel, BorderLayout.LINE_START);
         add(pictureJLabel, BorderLayout.CENTER);
 
+    }
+    private JRadioButton createRadioButton(AnimalButtonEnum animalButton) {
+        JRadioButton radioButton = new JRadioButton(animalButton.getName());
+        radioButton.setMnemonic(animalButton.getMnemonic());
+        radioButton.setActionCommand(animalButton.getCommand());
+        radioButton.setSelected(animalButton.isSelected());
+        radioButton.addActionListener(this);
+        buttonGroup.add(radioButton);
+        buttonPanel.add(radioButton);
+        return radioButton;
     }
 
     @Override
