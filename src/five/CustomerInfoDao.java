@@ -88,7 +88,7 @@ public class CustomerInfoDao implements Dao<CustomerInfo> {
         System.out.println(entity);
         String sql = "UPDATE CUSTOMERS SET ADDRESSLINE1=? WHERE CUSTOMER_ID=?";
         try(PreparedStatement ps = connectionPool.getConnection().prepareStatement(sql)){
-            ps.setString(1, entity.getADDRESSLINE1());
+            ps.setString(6, entity.getADDRESSLINE1());
             ps.setInt(2, entity.getCUSTOMER_ID());
             ps.execute();
         }catch(SQLException e){
