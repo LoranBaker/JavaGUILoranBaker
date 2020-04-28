@@ -27,7 +27,7 @@ public class GuiStarter extends JFrame {
     public static void main(String[] args) throws SQLException {
         DerbyConnectionPool pool = new DerbyConnectionPool();
         CustomerInfoDao customerDao = new CustomerInfoDao(pool);
-        JPanel custJPanel = new CustomerInfoPanel(customerDao);
+        JPanel custJPanel = new CustomerPanel(customerDao);
         GuiStarter gs = new GuiStarter(custJPanel);
         SwingUtilities.invokeLater(gs::showFrame);
     }

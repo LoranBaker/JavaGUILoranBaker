@@ -37,7 +37,7 @@ public class CustomerPanel extends JPanel {
         OurTableModel tableModel = new OurTableModel(customerDao.getColumnNames(), getCustomers());
         this.tableRowSorter = new TableRowSorter<>(tableModel);
         JPanel form = new JPanel(new GridLayout(1, 1));
-        JLabel addressLabel = new JLabel("Filter by sport:", SwingConstants.TRAILING);
+        JLabel addressLabel = new JLabel("Filter by address:", SwingConstants.TRAILING);
         form.add(addressLabel);
         addressTextField = new JTextField();
         CustomerDocumentListener documentListener = new CustomerDocumentListener(addressTextField , tableRowSorter);
@@ -129,7 +129,7 @@ public class CustomerPanel extends JPanel {
             rowVector.remove(columnIndex);
             rowVector.add(columnIndex, aValue);
             fireTableCellUpdated(rowIndex, columnIndex);
-            
+            /*
             int CUSTOMER_ID = (int) rowVector.get(0);
             String DISCOUNT_CODE = (String) rowVector.get(1);
             int ZIP = (int) rowVector.get(2);
@@ -144,7 +144,7 @@ public class CustomerPanel extends JPanel {
                 customerDao.update(customerInfo);
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
-            }
+            }*/
         }
 
     }
