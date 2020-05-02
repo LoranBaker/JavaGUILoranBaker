@@ -38,10 +38,12 @@ public class LoginForm extends Application{
         grid.setPadding(new Insets(25, 25, 25, 25));
         
         Text sceneText = new Text("Welcome");
+        sceneText.setId("welcome-text");
         sceneText.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
         grid.add(sceneText, 0, 0, 2, 1);
         
         Label username = new Label("Username: ");
+        username.setId("label");
         grid.add(username, 0, 1);
         
         TextField usernameTextField = new TextField();
@@ -67,7 +69,9 @@ public class LoginForm extends Application{
         //grid.setGridLinesVisible(true);
         
         Scene scene = new Scene(grid, 300, 275);
+        
         stage.setScene(scene);
+        scene.getStylesheets().add(LoginForm.class.getResource("Login.css").toExternalForm());
         stage.show();
     }
     public static void main(String[] args) {
